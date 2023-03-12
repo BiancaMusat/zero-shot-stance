@@ -242,10 +242,23 @@ class TorchModelHandler:
         self.model.train()
         self.loss = 0.
         start_time = time.time()
+
+        # used for logits -- writes the indices of the data in the order they've been shuffled
+        with open("logits.txt", "a") as f:
+            if self.epoch == 0:
+                f.write(str(self.dataloader.indices) + '\n')
+
         for i_batch, sample_batched in enumerate(self.dataloader):
             self.model.zero_grad()
 
             y_pred, labels = self.get_pred_with_grad(sample_batched)
+
+            # used for logits -- writes the logits to a file
+            with open("logits.txt", "a") as f:
+                f.write(str(self.epoch) + '\n')
+                f.write(str(i_batch) + '\n')
+                f.write(str(labels) + '\n')
+                f.write(str(list(y_pred)).strip() + '\n')
 
             label_tensor = torch.tensor(labels)
             if self.use_cuda:
