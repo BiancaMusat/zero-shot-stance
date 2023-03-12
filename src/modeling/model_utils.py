@@ -258,7 +258,7 @@ class TorchModelHandler:
                 f.write(str(self.epoch) + '\n')
                 f.write(str(i_batch) + '\n')
                 f.write(str(labels) + '\n')
-                f.write(str(list(y_pred)).strip() + '\n')
+                f.write(str(list(y_pred)).replace("\n", "") + '\n')
 
             label_tensor = torch.tensor(labels)
             if self.use_cuda:
