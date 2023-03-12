@@ -1,5 +1,6 @@
 import re
 import argparse
+import os
 
 def generate_dynamics(logits_file, EPOCHS, BATCH_SIZE):
     """
@@ -43,6 +44,9 @@ def generate_dynamics(logits_file, EPOCHS, BATCH_SIZE):
         for j, id in enumerate(all_ids_b[k]):
                 file_data[epoch].append({"guid" : id, "logits_epoch_"+str(epoch) : logits[j], "gold": labels[j]})  # enerate trainin dynamics
         k += 1
+
+    if not os.path.exists('training_dynamics'):
+        os.makedirs('training_dynamics')
 
     file_names = ["training_dynamics/dynamics_epoch_" + str(x) + ".jsonl" for x in range(0, EPOCHS)]
     for i, file_name in enumerate(file_names):
