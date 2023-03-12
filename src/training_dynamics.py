@@ -65,10 +65,10 @@ if __name__ == '__main__':
         logits_file = args["logits_file"]
 
     if args["epochs"] is not None:
-        epochs = args["epochs"]
+        epochs = int(args["epochs"])
 
     if args["batch_size"] is not None:
-        batch_size = args["batch_size"]
+        batch_size = int(args["batch_size"])
 
     generate_dynamics(logits_file, epochs, batch_size)
     
